@@ -15,6 +15,8 @@ public class Monster : MonoBehaviour
 
     private bool isDead = false;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,7 @@ public class Monster : MonoBehaviour
     {
         curHp = maxHp;
         nameText.text = monsterName;
+        animator = GetComponent<Animator>();
     }
 
     public void OnHit(float damage)
@@ -41,6 +44,7 @@ public class Monster : MonoBehaviour
             curHp = 0;
             isDead = true;
         }
+        animator.SetTrigger("Hit");
         Debug.Log("Slime Hit!, Current Hp : " + curHp);
         hpBar.ChangeHpBarAmount(curHp / maxHp);
 
@@ -48,6 +52,7 @@ public class Monster : MonoBehaviour
         if (isDead)
         {
             Debug.Log("Slime is Dead.");
+            animator.SetTrigger("Death");
             Destroy(gameObject, 1.5f);
         }
     }
